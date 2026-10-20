@@ -14,6 +14,8 @@ export default defineConfig(() => {
         srcDir: 'src',
         filename: 'sw.ts',
         registerType: 'autoUpdate',
+        injectRegister: 'auto',
+        includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
         manifest: {
           id: '/',
           name: 'PrismMods Bedrock Hub',
@@ -24,7 +26,6 @@ export default defineConfig(() => {
           display: 'standalone',
           start_url: '/',
           scope: '/',
-          orientation: 'portrait',
           categories: ['education', 'utilities', 'games'],
           icons: [
             {
@@ -39,19 +40,11 @@ export default defineConfig(() => {
               type: 'image/png',
               purpose: 'any',
             },
-          ],
-          screenshots: [
             {
-              src: '/screenshot-wide.png',
-              sizes: '1280x720',
+              src: '/maskable-icon-512x512.png',
+              sizes: '512x512',
               type: 'image/png',
-              form_factor: 'wide',
-            },
-            {
-              src: '/screenshot-narrow.png',
-              sizes: '720x1280',
-              type: 'image/png',
-              form_factor: 'narrow',
+              purpose: 'maskable',
             },
           ],
         },
