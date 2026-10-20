@@ -12,17 +12,17 @@ export const PWAInstallButton: React.FC = () => {
   }
 
   // Chromium / Android / Desktop flow
-  if (isInstallable) {
-    return (
-      <button
-        onClick={install}
-        className="flex items-center gap-2 rounded-lg bg-cyan-600 px-4 py-2 text-sm font-bold text-slate-950 shadow-sm hover:bg-cyan-500 transition"
-      >
-        <Download className="w-4 h-4" />
-        Install App
-      </button>
-    );
-  }
+  return (
+    <button
+      onClick={isInstallable ? install : () => {}}
+      className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold text-slate-950 shadow-sm transition ${
+        isInstallable ? 'bg-cyan-600 hover:bg-cyan-500' : 'bg-slate-600 cursor-default opacity-80'
+      }`}
+    >
+      <Download className="w-4 h-4" />
+      Install App
+    </button>
+  );
 
   // iOS Safari flow (beforeinstallprompt is not supported by WebKit)
   if (isIOS) {
