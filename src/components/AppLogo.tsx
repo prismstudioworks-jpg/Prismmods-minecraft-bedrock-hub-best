@@ -80,10 +80,13 @@ export const AppLogo: React.FC<AppLogoProps> = ({ config, className = '', size =
     case 'prism':
     default:
       return (
-        <div className={`relative rounded-xl bg-gradient-to-br from-cyan-500 via-teal-600 to-emerald-600 p-0.5 shadow-lg shadow-cyan-500/20 ${sizeMap} ${className}`}>
-          <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-            <div className="w-5 h-5 bg-gradient-to-tr from-cyan-400 via-teal-300 to-emerald-400 rotate-45 rounded-sm shadow-inner" />
-          </div>
+        <div className={`relative rounded-xl overflow-hidden shadow-lg shadow-purple-500/30 bg-slate-950 ${sizeMap} ${className}`}>
+          <img
+            src="/logo.png"
+            alt="PrismMods"
+            className="w-full h-full object-cover select-none"
+            draggable={false}
+          />
         </div>
       );
   }

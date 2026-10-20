@@ -39,7 +39,7 @@ interface DeveloperSettingsModalProps {
 }
 
 const ICON_PRESETS: { type: AppStatusConfig['appIconType']; label: string; desc: string }[] = [
-  { type: 'prism', label: 'Prism Crystal', desc: 'Glowing cyan crystal diamond' },
+  { type: 'prism', label: 'PrismMods Logo', desc: 'Official PrismMods crystal logo' },
   { type: 'emerald', label: 'Emerald Gem', desc: 'Vibrant Minecraft emerald' },
   { type: 'netherite', label: 'Netherite Ingot', desc: 'Sleek dark obsidian netherite' },
   { type: 'ender', label: 'Eye of Ender', desc: 'Mystic portal purple & cyan' },
