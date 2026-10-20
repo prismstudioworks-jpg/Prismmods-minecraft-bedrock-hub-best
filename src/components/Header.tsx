@@ -161,7 +161,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Clean right side beside PrismMods title - random buttons removed as requested */}
         <div className="flex items-center gap-2">
-          <PWAInstallButton />
+
         </div>
       </div>
     </header>
