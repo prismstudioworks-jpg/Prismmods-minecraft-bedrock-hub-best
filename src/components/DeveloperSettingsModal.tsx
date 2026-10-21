@@ -36,6 +36,10 @@ interface DeveloperSettingsModalProps {
   onToggleSaveAchievement: (enabled: boolean) => void;
   saveIntervalSeconds: number;
   onUpdateSaveInterval: (seconds: number) => void;
+  loadingScreenEnabled: boolean;
+  onToggleLoadingScreen: (enabled: boolean) => void;
+  isVisitorPreviewMode: boolean;
+  onToggleVisitorPreviewMode: (enabled: boolean) => void;
 }
 
 const ICON_PRESETS: { type: AppStatusConfig['appIconType']; label: string; desc: string }[] = [
@@ -120,6 +124,10 @@ export const DeveloperSettingsModal: React.FC<DeveloperSettingsModalProps> = ({
   onToggleSaveAchievement,
   saveIntervalSeconds,
   onUpdateSaveInterval,
+  loadingScreenEnabled,
+  onToggleLoadingScreen,
+  isVisitorPreviewMode,
+  onToggleVisitorPreviewMode,
 }) => {
   const [activeTab, setActiveTab] = useState<'app_state' | 'icon' | 'loading_screen' | 'visitors' | 'rules' | 'reports' | 'data'>('app_state');
   const [visitors, setVisitors] = useState<VisitorPresence[]>([]);
@@ -1601,7 +1609,33 @@ export const DeveloperSettingsModal: React.FC<DeveloperSettingsModalProps> = ({
                 />
               </div>
 
+              <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <div className="text-sm font-bold text-slate-100">Initial Loading Screen</div>
+                  <div className="text-[11px] text-slate-400">Enable or disable the loading screen on app launch.</div>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={loadingScreenEnabled}
+                  onChange={(e) => onToggleLoadingScreen(e.target.checked)}
+                  className="w-5 h-5 rounded text-emerald-500 focus:ring-emerald-400 bg-slate-900 border-slate-700 cursor-pointer shrink-0"
+                />
+              </div>
+              <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <div className="text-sm font-bold text-slate-100">Visitor Preview Mode</div>
+                  <div className="text-[11px] text-slate-400">View the app as a visitor would see it.</div>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={isVisitorPreviewMode}
+                  onChange={(e) => onToggleVisitorPreviewMode(e.target.checked)}
+                  className="w-5 h-5 rounded text-sky-500 focus:ring-sky-400 bg-slate-900 border-slate-700 cursor-pointer shrink-0"
+                />
+              </div>
+
               {/* Auto-save interval configuration */}
+
               <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
                   Auto-save Duration

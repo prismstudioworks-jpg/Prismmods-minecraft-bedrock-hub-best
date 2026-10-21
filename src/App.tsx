@@ -125,7 +125,15 @@ export default function App() {
   const [saveAchievementToast, setSaveAchievementToast] = useState<string | null>(null);
 
   // App Loading & Version Popup
-  const [isAppLoading, setIsAppLoading] = useState(true);
+  const [isAppLoading, setIsAppLoading] = useState(false);
+  const [loadingScreenEnabled, setLoadingScreenEnabled] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem('prismmods_loading_screen_enabled');
+      return stored !== null ? JSON.parse(stored) : false;
+    } catch {
+      return false;
+    }
+  });
   const [isVersionPopupOpen, setIsVersionPopupOpen] = useState(false);
 
   const handleToggleSaveAchievement = (enabled: boolean) => {
@@ -149,10 +157,17 @@ export default function App() {
     const duration = appStatus.loadingScreenDuration && !isNaN(appStatus.loadingScreenDuration)
       ? appStatus.loadingScreenDuration
       : 7;
-    const loadingTimer = setTimeout(() => {
+    
+    let loadingTimer: NodeJS.Timeout;
+    if (loadingScreenEnabled) {
+      setIsAppLoading(true);
+      loadingTimer = setTimeout(() => {
+        setIsAppLoading(false);
+        setIsVersionPopupOpen(true);
+      }, duration * 1000);
+    } else {
       setIsAppLoading(false);
-      setIsVersionPopupOpen(true);
-    }, duration * 1000);
+    }
 
     const intervalSec = saveIntervalSeconds && !isNaN(saveIntervalSeconds) && saveIntervalSeconds > 0
       ? saveIntervalSeconds
@@ -171,10 +186,10 @@ export default function App() {
     }, intervalSec * 1000);
 
     return () => {
-      clearTimeout(loadingTimer);
+      if (loadingTimer) clearTimeout(loadingTimer);
       clearInterval(saveInterval);
     };
-  }, [saveAchievementEnabled, saveIntervalSeconds, appStatus.loadingScreenDuration]);
+  }, [saveAchievementEnabled, saveIntervalSeconds, appStatus.loadingScreenDuration, loadingScreenEnabled]);
   // Live Visitor Kick / Ban status
   const [isBanned, setIsBanned] = useState<boolean>(false);
   const [kickRecord, setKickRecord] = useState<KickRecord | null>(null);
@@ -1069,6 +1084,13 @@ export default function App() {
         onToggleSaveAchievement={handleToggleSaveAchievement}
         saveIntervalSeconds={saveIntervalSeconds}
         onUpdateSaveInterval={handleUpdateSaveInterval}
+        loadingScreenEnabled={loadingScreenEnabled}
+        onToggleLoadingScreen={(enabled) => {
+          setLoadingScreenEnabled(enabled);
+          localStorage.setItem('prismmods_loading_screen_enabled', JSON.stringify(enabled));
+        }}
+        isVisitorPreviewMode={isVisitorPreviewMode}
+        onToggleVisitorPreviewMode={setIsVisitorPreviewMode}
       />
 
       <BedrockLoadingScreen
